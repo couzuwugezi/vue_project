@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <loginDiv/>
     <!-- 路由出口 -->
     <!-- 路由匹配到的组件将渲染在这里 -->
@@ -19,9 +19,6 @@
 </script>
 
 <style>
-  #app {
-
-  }
   body {
     height: 100%;
     width: 100%;
