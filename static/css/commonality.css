@@ -1,0 +1,247 @@
+.app-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+/******************header***************************/
+.container-header__icon > embed {
+  width: auto;
+}
+
+.app-container__header {
+  background-color: #F2F5F4;
+  color: #1ED67D;
+  text-align: left;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 1;
+  line-height: 50px;
+  border-bottom: 1px solid #DDE6E9;
+}
+
+.container-header__icon {
+  box-sizing: border-box;
+  float: left;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.container-header__element {
+  float: left;
+  padding: 0px 10px;
+}
+
+.container-header__setting {
+  position: absolute;
+  right: 35px;
+  top: 0px;
+}
+
+.container-header__btn {
+  /*float: right;*/
+  position: absolute;
+  box-sizing: border-box;
+  background-image: url("../svg/back.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  top: 15px;
+  right: -50px;
+
+}
+
+.container-header__bg {
+  width: 30px;
+  height: 30px;
+  background: #cccccc;
+  float: left;
+  position: absolute;
+  top: 10px;
+  left: -40px;
+  border-radius: 50px;
+  background-image: url("../svg/voice.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.container-header__photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-image: url("../svg/girl.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 10px auto;
+}
+
+.container-header__text {
+  color: #727874;
+}
+
+.contanier-header__control {
+  margin-bottom: 0px;
+}
+
+/*——————————————————————————aside——————————————————————————————————*/
+
+.aside-container {
+  background-color: #FFFFFF;
+  height: 100%;
+  text-align: center;
+  line-height: 200px;
+  top: 50px;
+  z-index: 22;
+  min-height: 100%;
+  position: fixed;
+}
+
+.aside-container-height {
+  height: 90%;
+  overflow: auto;
+}
+
+.aside-container__switch-icon {
+  line-height: 50px;
+  background-color: #fcfcfc;
+}
+
+.aside-container__line {
+  width: 100%;
+  border-bottom: 1px solid rgba(224, 224, 224, 0.55);
+}
+
+.aside-container__menu {
+  border-right: 0px;
+}
+
+.aside-container__option {
+  padding: 0 80px;
+  font-size: 12px;
+  margin: 5px;
+  height: 40px;
+  line-height: 40px;
+  color: #1ED67D;
+}
+
+.aside-container__option.is-active {
+  color: #FFFFFF;
+  background-color: #1ED67D;
+  border-radius: 4px;
+}
+
+.aside-container__option:focus, .aside-container__option:hover {
+  background-color: #80d7a3;
+  border-radius: 4px;
+  color: #FFFFFF;
+}
+
+.aside-container__menu:not(.el-menu--collapse) {
+  width: 180px;
+  min-height: 400px;
+}
+
+.aside-container__title .aside-container__option {
+  min-width: 0px
+}
+
+.aside-container__title > .el-submenu__title:hover {
+  background-color: rgba(128, 215, 163, 0.51);
+
+}
+
+.aside-container__title > .el-menu {
+  background-color: #E5F2EC;
+}
+
+.aside-container__title > .el-menu-item:focus, .el-menu-item:hover {
+  background-color: #1ED67D !important;
+}
+
+.aside-container__title2 > .el-menu-item:focus, .el-menu-item:hover {
+  background-color: rgba(128, 215, 163, 0.51);
+}
+
+.aside-container__title2 > .aside-container__option1.is-active {
+  color: #1ED67D;
+}
+
+.aside-container__title2 > .aside-container__option1:hover {
+  color: #FFFFFF;
+}
+
+.main-container {
+  min-height: 100%;
+  margin-left: 64px;
+  position: relative;
+  top: 50px;
+  padding: 10px;
+}
+
+/*--------------折叠按钮切换------------------*/
+.el-radio-button__inner {
+  padding: 3px;
+}
+
+.el-radio-button__orig-radio:checked + .el-radio-button__inner {
+  background-color: transparent;
+  border-color: #eeeeee;
+}
+
+.el-radio-button__inner:hover {
+  color: transparent;
+}
+
+.el-radio-button__orig-radio:checked + .el-radio-button__inner {
+  box-shadow: none;
+}
+
+/*-------------信息红点------------------*/
+.el-badge__content.is-fixed {
+  top: 15px;
+  right: 10px;
+  z-index: 10;
+}
+
+.el-badge__content.is-fixed.is-dot {
+  right: 10px;
+}
+
+/*-----------文字elementUI按钮------------------*/
+.container-header__setting-user > .el-button--text {
+  color: #727874;
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+/*---------------------修改个人资料和密码修改dialog-------------------*/
+.container-header__dialog {
+  width: 70% !important;
+  margin: 0px auto;
+}
+
+.el-edit > .el-form-item__label {
+
+}
+
+.el-edit > .el-form-item__label {
+  line-height: 30px;
+  padding: 0px;
+}
+
+/*---------------------修改个人资料和密码修改dialog--------------------*/
+
+/*---------------头像上传--------------------------*/
+.el-upload__input {
+  display: none !important;
+}
+
+/*------------------下拉菜单------------------------*/
+.el-dropdown-menu__item {
+  padding: 0 10px;
+  font-size: 16px;
+  color: #727874;
+  font-weight: bold;
+}

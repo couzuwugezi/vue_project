@@ -124,8 +124,7 @@
               'loginPassword': vm.form.loginPassword,
               'sex': vm.form.sex
             }).then(function (response) {
-              debugger;
-              if(response.status !== 200){
+              if (response.status !== 200) {
                 vm.$alert("系统异常,请联系管理员");
                 return false;
               }

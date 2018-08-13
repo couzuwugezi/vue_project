@@ -51,7 +51,34 @@
     },
     methods: {
       submitForm(form) {
+        let vm = this;
+        this.$refs[form].validate(function (valid) {
+          if (valid) {
+            let params = new URLSearchParams();
+            params.append("loginname", vm.form.loginname);
+            params.append("password", vm.form.password);
+            vm.$axios.post('/manage/checkLogin', params).then((response) => {
+              if (response.status !== 200) {
+                vm.$alert("系统异常,请联系管理员");
+                return false;
+              }
+              let data = response.data;
+              vm.form = {};
+              if (data.hasOwnProperty('code')) {
+                if (data.code !== '1') {
+                  vm.$alert(data.msg);
+                } else {
 
+                }
+              }
+            }).catch((error) => {
+              console.log(error);
+            });
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       },
       closeDialog(val) {
         this.registShow = val;
@@ -73,7 +100,7 @@
     position: fixed;
     width: 100%;
     height: 100%;
-    background: url("../assets/img/unsplash.jpg") no-repeat fixed;
+    background: url("/static/img/unsplash.jpg") no-repeat fixed;
     box-sizing: border-box;
     background-size: cover;
     z-index: 1;
