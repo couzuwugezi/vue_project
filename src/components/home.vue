@@ -45,7 +45,7 @@
       <div class="main" style="display: block;">
         <el-aside class="aside-container" width="90" id="menu">
           <div class="aside-container__switch-icon">
-            <el-radio-group v-model="isCollapse" @change="change">
+            <el-radio-group v-model="isCollapse">
               <el-radio-button :label="true"><i class="el-icon-caret-left"></i></el-radio-button>
               <el-radio-button :label=" false"><i class="el-icon-caret-right"></i></el-radio-button>
             </el-radio-group>
@@ -170,7 +170,7 @@
         </div>
       </div>
     </div>
-    <link rel="stylesheet" type="text/css" href="../assets/css/commonality.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/commonality.css"/>
   </div>
 </template>
 
@@ -180,12 +180,53 @@
     data() {
       return {
         isCollapse: false,
+        show: false,
         form: {
           oldPass: '',
           nowPass: '',
           surePass: ''
         },
-        dialogVisible: false
+        dialogVisible: false,
+        rules: {
+          oldPass: [{required: true, message: '请输入原密码'},
+            {
+              validator: function (rule, value, callback) {
+                vm.$axios.post('/manage/operateMana/checkPassword', {
+                  loginname: '',
+                  oldPass: value
+                }).then((response) => {
+                  if (response.status !== 200) {
+                    this.$alert("系统异常,请联系管理员");
+                    return false;
+                  }
+                  let data = response.data;
+                  if (data.hasOwnProperty('code')) {
+                    if (data.code !== '1') {
+                      callback(new Error(data.msg))
+                    } else {
+                      callback();
+                    }
+                  }
+                }).catch((error) => {
+                  console.log(error);
+                });
+              },
+              trigger: 'blur'
+            }
+          ],
+          nowPass: [{required: true, message: '密码不能为空'}],
+          surePass: [{required: true, message: '请再次输入密码'},
+            {
+              validator: function (rule, value, callback) {
+                if (value !== this.form.nowPass) {
+                  callback(new Error("两次输入的密码不一致"))
+                } else {
+                  callback();
+                }
+              },
+              trigger: 'blur'
+            }]
+        }
       }
     },
     methods: {
@@ -194,7 +235,13 @@
       },
       submitForm(form) {
 
+      },
+      handleSelect(key, index) {
+
       }
+    },
+    mounted() {
+      debugger;
     }
   }
 </script>
