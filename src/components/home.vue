@@ -226,7 +226,8 @@
               },
               trigger: 'blur'
             }]
-        }
+        },
+        loginname: ''
       }
     },
     methods: {
@@ -238,10 +239,21 @@
       },
       handleSelect(key, index) {
 
+      },
+      updateName() {
+        let params = this.$route.params;
+        if (params.hasOwnProperty('loginname') && params.loginname === 'superadmin') {
+          this.show = true;
+        }
       }
     },
     mounted() {
-      debugger;
+    },
+    created() {
+      this.updateName();
+    },
+    watch: {
+      '$route': 'updateName'
     }
   }
 </script>

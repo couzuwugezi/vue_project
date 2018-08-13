@@ -7,7 +7,7 @@
       <div class="main-container__drag">
         <div class="main-container__drag-login">
           <div class="main-content-right__form" align="center">
-            <el-form :model="form" id="loginForm" status-icon :rules="rules" ref="loginForm"
+            <el-form :model="form" status-icon :rules="rules" ref="loginForm"
                      class="demo-ruleForm">
               <el-form-item label="" prop="loginname">
                 <el-input placeholder="请输入账号" prefix-icon="el-icon-setting" type="loginname"
@@ -63,12 +63,18 @@
                 return false;
               }
               let data = response.data;
-              vm.form = {};
+
               if (data.hasOwnProperty('code')) {
                 if (data.code !== '1') {
                   vm.$alert(data.msg);
                 } else {
-
+                  vm.$router.push({
+                    name: 'home',
+                    params: {
+                      loginname: vm.form.loginname
+                    }
+                  });
+                  vm.form = {};
                 }
               }
             }).catch((error) => {

@@ -8,7 +8,7 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/home/:loginname',
+      path: '/home',
       name: 'home',
       component: Home
     },
