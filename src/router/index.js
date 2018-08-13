@@ -15,19 +15,23 @@ export default new Router({
       meta: {
         requireAuth: true,
       },
-      component: Home
+      component: Home,
+      children: [
+        {
+          path: '/sendMsgLog',
+          name: 'sendMsgLog',
+          component: sendMsgLog,
+          meta: {
+            requireAuth: true,
+          }
+        }
+      ]
     },
     {
       // 默认跳转
       path: '/',
       name: 'login',
       component: login
-    },
-    {
-      // 默认跳转
-      path: '/sendMsgLog',
-      name: 'sendMsgLog',
-      component: sendMsgLog
     }
   ]
 })
