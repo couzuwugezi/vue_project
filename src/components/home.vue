@@ -167,6 +167,7 @@
           </div>
         </el-aside>
         <div id="content" class="main-container" style="float: right;width: 95.5%">
+          <router-view/>
         </div>
       </div>
     </div>
@@ -175,6 +176,7 @@
 </template>
 
 <script>
+  let vm;
   export default {
     name: "home",
     data() {
@@ -191,9 +193,17 @@
           oldPass: [{required: true, message: '请输入原密码'},
             {
               validator: function (rule, value, callback) {
-                vm.$axios.post('/manage/operateMana/checkPassword', {
-                  loginname: '',
-                  oldPass: value
+                let params = new URLSearchParams();
+                params.append("loginname", vm.loginname);
+                params.append("oldPass", value);
+
+                vm.$axios({
+                  method: 'post',
+                  url: '/manage/operateMana/checkPassword',
+                  data: {
+                    loginname: vm.loginname,
+                    oldPass: value
+                  }
                 }).then((response) => {
                   if (response.status !== 200) {
                     this.$alert("系统异常,请联系管理员");
@@ -202,12 +212,13 @@
                   let data = response.data;
                   if (data.hasOwnProperty('code')) {
                     if (data.code !== '1') {
-                      callback(new Error(data.msg))
+                      callback(new Error(data.msg));
                     } else {
                       callback();
                     }
                   }
                 }).catch((error) => {
+                  callback('系统异常');
                   console.log(error);
                 });
               },
@@ -218,7 +229,7 @@
           surePass: [{required: true, message: '请再次输入密码'},
             {
               validator: function (rule, value, callback) {
-                if (value !== this.form.nowPass) {
+                if (value !== vm.form.nowPass) {
                   callback(new Error("两次输入的密码不一致"))
                 } else {
                   callback();
@@ -227,33 +238,88 @@
               trigger: 'blur'
             }]
         },
-        loginname: ''
+        loginname: localStorage.getItem("loginname")
       }
     },
     methods: {
       handleCommand(val) {
-
+        if (val === 'resetPwd') {
+          this.form = {};
+          this.dialogVisible = true;
+        } else {
+          this.$axios.get("/manage/logout");
+          this.$router.push('/');
+          sessionStorage.removeItem('hasLogin');
+          vm.form = {};
+        }
       },
       submitForm(form) {
 
       },
-      handleSelect(key, index) {
-
-      },
-      updateName() {
-        let params = this.$route.params;
-        if (params.hasOwnProperty('loginname') && params.loginname === 'superadmin') {
-          this.show = true;
+      handleSelect(key) {
+        if (key === '1-1') {
+          this.$router.push('/entrance');
+        } else if (key === '1-2') {
+          this.$router.push('/depPersion');
+        } else if (key === '1-3') {
+          this.$router.push('/depRole');
+        } else if (key === '2-1') {
+          this.$router.push('/sys');
+        } else if (key === '2-2') {
+          this.$router.push('/sysEnt');
+        } else if (key === '2-3') {
+          this.$router.push('/webSysEnt');
+        } else if (key === '4-1') {
+          this.$router.push('/yyydList');
+        } else if (key === '5-1') {
+          this.$router.push('/resource');
+        } else if (key === '5-2') {
+          this.$router.push('/resourceInfo');
+        } else if (key === '6-1') {
+          this.$router.push('/table');
+        } else if (key === '6-2') {
+          this.$router.push('/file');
+        } else if (key === '6-3') {
+          this.$router.push('/serviceData');
+        } else if (key === '6-4') {
+          this.$router.push('/changeData');
+        } else if (key === '6-5') {
+          this.$router.push('/dataExcConfig');
+        } else if (key === '7-1') {
+          this.$router.push('/flowManage');
+        } else if (key === '7-2') {
+          this.$router.push('/mixFlowManage');
+        } else if (key === '8-1') {
+          this.$router.push('/sendMsgLog');
+        } else if (key === '8-2') {
+          this.$router.push('/callAPILog');
+        } else if (key === '8-3') {
+          this.$router.push('/visitHistory');
+        } else if (key === '13') {
+          this.$router.push('/configMana');
+        } else if (key === '9-1') {
+          this.$router.push('/OperationMana');
+        } else if (key === '10-1') {
+          this.$router.push('/workMana');
+        } else if (key === '10-2') {
+          this.$router.push('/runControl');
+        } else if (key === '10-3') {
+          this.$router.push('/runCount');
+        } else if (key === '11-1') {
+          this.$router.push('/searchType');
+        } else if (key === '12-1') {
+          this.$router.push('/sensitive');
         }
       }
     },
     mounted() {
+      vm = this;
     },
     created() {
-      this.updateName();
-    },
-    watch: {
-      '$route': 'updateName'
+      let params = this.$route.params;
+      if (params.hasOwnProperty('loginname') && params.loginname === 'superadmin') {
+        this.show = true;
+      }
     }
   }
 </script>

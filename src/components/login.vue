@@ -19,7 +19,7 @@
               </el-form-item>
               <el-form-item>
                 <el-button type="success" @click="submitForm('loginForm')">登录</el-button>
-                <el-button type="success" @click="registShow = true">注册</el-button>
+                <!--<el-button type="success" @click="registShow = true">注册</el-button>-->
               </el-form-item>
             </el-form>
           </div>
@@ -54,10 +54,14 @@
         let vm = this;
         this.$refs[form].validate(function (valid) {
           if (valid) {
-            let params = new URLSearchParams();
-            params.append("loginname", vm.form.loginname);
-            params.append("password", vm.form.password);
-            vm.$axios.post('/manage/checkLogin', params).then((response) => {
+            vm.$axios({
+              method: 'post',
+              url: '/manage/checkLogin',
+              data: {
+                loginname: vm.form.loginname,
+                password: vm.form.password
+              }
+            }).then((response) => {
               if (response.status !== 200) {
                 vm.$alert("系统异常,请联系管理员");
                 return false;
