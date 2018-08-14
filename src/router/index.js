@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../components/home.vue'
 import login from '../components/login';
-import sendMsgLog from '../components/sendMsgLog';
+import sendMsgLog from '../components/accessLog/sendMsgLog';
 
 Vue.use(Router);
 

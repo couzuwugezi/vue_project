@@ -45,15 +45,15 @@
       <div class="main" style="display: block;">
         <el-aside class="aside-container" width="90" id="menu">
           <div class="aside-container__switch-icon">
-            <el-radio-group v-model="isCollapse">
+            <el-radio-group v-model="isCollapse" @change="change">
               <el-radio-button :label="true"><i class="el-icon-caret-left"></i></el-radio-button>
               <el-radio-button :label=" false"><i class="el-icon-caret-right"></i></el-radio-button>
             </el-radio-group>
           </div>
           <div class="aside-container__line"></div>
           <div class="aside-container-height">
-            <el-menu class="el-menu-vertical-demo aside-container__menu " :collapse="isCollapse"
-                     default-active="2" @select="handleSelect" style="height: 100%;">
+            <el-menu class="el-menu-vertical-demo aside-container__menu " :collapse="isCollapse" router
+                     :default-active="$route.path" style="height: 100%;">
               <el-submenu index="1" class="aside-container__title">
                 <template slot="title">
                   <i class="el-icon-menu"></i>
@@ -125,7 +125,7 @@
               <el-submenu index="8" class="aside-container__title">
                 <template slot="title"><i class="el-icon-menu"></i><span>访问日志管理</span></template>
                 <el-menu-item-group>
-                  <el-menu-item index="8-1" class="aside-container__option">短信发送日志</el-menu-item>
+                  <el-menu-item index="/sendMsgLog" class="aside-container__option">短信发送日志</el-menu-item>
                 </el-menu-item-group>
                 <el-menu-item-group>
                   <el-menu-item index="8-2" class="aside-container__option">协同接口访问日志</el-menu-item>
@@ -181,7 +181,7 @@
     name: "home",
     data() {
       return {
-        isCollapse: false,
+        isCollapse: true,
         show: false,
         form: {
           oldPass: '',
@@ -238,10 +238,18 @@
               trigger: 'blur'
             }]
         },
-        loginname: localStorage.getItem("loginname")
+        contentStyle: {}
       }
     },
     methods: {
+      change(val) {
+        this.isCollapse = val;
+        if (val) {
+          $("#content").width('93.5%');
+        } else {
+          $("#content").width('85.5%');
+        }
+      },
       handleCommand(val) {
         if (val === 'resetPwd') {
           this.form = {};
@@ -255,61 +263,6 @@
       },
       submitForm(form) {
 
-      },
-      handleSelect(key) {
-        if (key === '1-1') {
-          this.$router.push('/entrance');
-        } else if (key === '1-2') {
-          this.$router.push('/depPersion');
-        } else if (key === '1-3') {
-          this.$router.push('/depRole');
-        } else if (key === '2-1') {
-          this.$router.push('/sys');
-        } else if (key === '2-2') {
-          this.$router.push('/sysEnt');
-        } else if (key === '2-3') {
-          this.$router.push('/webSysEnt');
-        } else if (key === '4-1') {
-          this.$router.push('/yyydList');
-        } else if (key === '5-1') {
-          this.$router.push('/resource');
-        } else if (key === '5-2') {
-          this.$router.push('/resourceInfo');
-        } else if (key === '6-1') {
-          this.$router.push('/table');
-        } else if (key === '6-2') {
-          this.$router.push('/file');
-        } else if (key === '6-3') {
-          this.$router.push('/serviceData');
-        } else if (key === '6-4') {
-          this.$router.push('/changeData');
-        } else if (key === '6-5') {
-          this.$router.push('/dataExcConfig');
-        } else if (key === '7-1') {
-          this.$router.push('/flowManage');
-        } else if (key === '7-2') {
-          this.$router.push('/mixFlowManage');
-        } else if (key === '8-1') {
-          this.$router.push('/sendMsgLog');
-        } else if (key === '8-2') {
-          this.$router.push('/callAPILog');
-        } else if (key === '8-3') {
-          this.$router.push('/visitHistory');
-        } else if (key === '13') {
-          this.$router.push('/configMana');
-        } else if (key === '9-1') {
-          this.$router.push('/OperationMana');
-        } else if (key === '10-1') {
-          this.$router.push('/workMana');
-        } else if (key === '10-2') {
-          this.$router.push('/runControl');
-        } else if (key === '10-3') {
-          this.$router.push('/runCount');
-        } else if (key === '11-1') {
-          this.$router.push('/searchType');
-        } else if (key === '12-1') {
-          this.$router.push('/sensitive');
-        }
       }
     },
     mounted() {
@@ -317,7 +270,7 @@
     },
     created() {
       let params = this.$route.params;
-      if (params.hasOwnProperty('loginname') && params.loginname === 'superadmin') {
+      if ((params.hasOwnProperty('loginname') && params.loginname === 'superadmin') || sessionStorage.getItem("hasLogin") === 'true') {
         this.show = true;
       }
     }
