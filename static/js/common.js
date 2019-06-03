@@ -122,10 +122,9 @@ function timestampToTime(shijianchuo) {
 }
 
 function isJson(obj) {
-  let isjson = typeof (obj) == "object"
+  return typeof (obj) == "object"
     && Object.prototype.toString.call(obj).toLowerCase() == "[object object]"
     && !obj.length;
-  return isjson;
 }
 
 function isRealNum(val) {
@@ -133,11 +132,7 @@ function isRealNum(val) {
   if (val === "" || val == null) {
     return false;
   }
-  if (!isNaN(val)) {
-    return true;
-  } else {
-    return false;
-  }
+  return !isNaN(val);
 }
 
 /**
@@ -149,7 +144,7 @@ function isRealNum(val) {
  */
 function removeByValue(arr, val) {
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i] == val) {
+    if (arr[i] === val) {
       arr.splice(i, 1);
       break;
     }
@@ -167,7 +162,7 @@ function delSameData(array) {
   for (let i = 0; i < array.length; i++) {
     // 如果当前数组的第i已经保存进了临时数组，那么跳过，
     // 否则把当前项push到临时数组里面
-    if (n.indexOf(array[i]) == -1)
+    if (n.indexOf(array[i]) === -1)
       n.push(array[i]);
   }
   return n;
